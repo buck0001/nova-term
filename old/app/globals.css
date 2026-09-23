@@ -1,0 +1,222 @@
+:root,
+[data-theme="dark"] {
+  --bg: #0b0e14;
+  --panel: #11151d;
+  --panel-2: #161b26;
+  --line: #1f2530;
+  --text: #e7ecf3;
+  --muted: #7a8598;
+  --mint: #2dd4bf;
+  --mint-dim: #1b8f80;
+  --coral: #fb6a6a;
+  --coral-dim: #b84545;
+  --amber: #f5b94d;
+  --radius: 8px;
+}
+
+/* Light mode overrides — applied when <html data-theme="light">.
+   Must come after the dark block above so it wins the cascade. */
+[data-theme="light"] {
+  --bg: #f5f7fb;
+  --panel: #ffffff;
+  --panel-2: #eef1f6;
+  --line: #dfe4ec;
+  --text: #12151c;
+  --muted: #636d80;
+  --mint: #0e9488;
+  --mint-dim: #0b756c;
+  --coral: #d64545;
+  --coral-dim: #b23636;
+  --amber: #9a6b0a;
+  --radius: 8px;
+}
+
+html {
+  transition: background 0.15s ease;
+}
+
+body {
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100%;
+}
+
+body {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+.mono {
+  font-family: "JetBrains Mono", "SF Mono", "Fira Code", ui-monospace, Menlo, Consolas, monospace;
+}
+
+a {
+  color: inherit;
+}
+
+::selection {
+  background: var(--mint-dim);
+  color: #fff;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--line);
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+input {
+  font-family: inherit;
+}
+
+.testnet-banner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(245, 185, 77, 0.1);
+  border: 1px solid rgba(245, 185, 77, 0.35);
+  color: var(--amber);
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+
+.btn-primary {
+  background: var(--mint);
+  color: #04120f;
+  border: none;
+  font-weight: 700;
+  padding: 10px 18px;
+  border-radius: 6px;
+  font-size: 13.5px;
+}
+
+.btn-ghost {
+  background: var(--panel-2);
+  color: var(--text);
+  border: 1px solid var(--line);
+  font-weight: 600;
+  padding: 10px 18px;
+  border-radius: 6px;
+  font-size: 13.5px;
+}
+
+.up {
+  color: var(--mint);
+}
+
+.down {
+  color: var(--coral);
+}
+
+html,
+body {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+/*
+ * ============================================
+ * APP SHELL LAYOUT
+ * ============================================
+ * The stretching/horizontal-scroll bug was caused by the content
+ * column next to the sidebar having no min-width, so flexbox let it
+ * grow to fit its widest child (grids, tables, the ticker tape)
+ * instead of shrinking to the viewport. `min-width: 0` on .app-main
+ * is the actual fix; overflow-x: hidden above was just papering
+ * over it and didn't fully work on its own.
+ */
+
+.app-shell {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+}
+
+.app-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.page-pad {
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  min-width: 0;
+}
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.chart-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  gap: 14px;
+}
+
+.bots-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+@media (max-width: 900px) {
+  .summary-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 860px) {
+  .chart-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .summary-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
