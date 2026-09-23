@@ -1,22 +1,20 @@
 # NOVA — Market Terminal (Next.js demo)
 
 A crypto trading terminal UI built with Next.js 14 (App Router). Live prices are
-pulled from the CoinGecko public API through two internal API routes. Everything
-else (balances, bots, deposits/withdrawals) is simulated **testnet-only** data —
-no real funds or real trades are involved anywhere in this app.
+pulled from the CoinGecko public API through two internal API routes. This
+version is a self-contained demo: there is no authentication, database, real
+wallet, deposit, withdrawal, or trading integration.
 
 ## Pages
 
-- `/login` — email/password form + a "Connect Wallet" button (MetaMask, optional).
+- `/login` — optional demo entry screen; no account is required.
 - `/dashboard` — portfolio summary, live ticker tape, live watchlist, and a
   real 24h price chart (pulled from CoinGecko `market_chart`).
 - `/bots` — 5 example trading bots (Grid, DCA, Trend Follower, Mean Reversion,
   Breakout Scalper), each with a short plain-English explanation of its logic,
   an on/off toggle, and an illustrative "simulated" P&L derived from the real
   24h price change. **No real orders are ever placed.**
-- `/wallet` — Deposit / Withdraw flow for **Sepolia ETH** and **Sepolia USDC**
-  only, clearly labeled testnet-only, with an optional MetaMask connect +
-  auto network-switch to Sepolia.
+- `/wallet` — visual-only wallet page with deposits and withdrawals disabled.
 
 ## Live price data
 
@@ -37,7 +35,7 @@ npm install
 npm run dev
 ```
 
-Then open http://localhost:3000 (it redirects to `/login`).
+Then open http://localhost:3000 (it opens the demo dashboard).
 
 To build for production:
 
@@ -46,13 +44,37 @@ npm run build
 npm start
 ```
 
+## Reusable NOVA style components
+
+The visual system is available from `components/ui` for reuse in other pages
+or projects that copy the component files and `globals.css` tokens:
+
+```jsx
+import { Banner, Button, Card, PageHeader, Section, StatCard } from "@/components/ui";
+
+export default function ExamplePage() {
+  return (
+    <div className="page-pad">
+      <PageHeader title="Overview" description="Compact terminal-style content." />
+      <Banner>Testnet environment</Banner>
+      <div className="summary-grid">
+        <StatCard label="Balance" value="$12,480" detail="+4.2%" trend="up" />
+      </div>
+      <Section title="Activity">
+        <Card>Reusable bordered panel content.</Card>
+      </Section>
+      <Button>Continue</Button>
+    </div>
+  );
+}
+```
+
+The components use the existing CSS variables (`--bg`, `--panel`, `--line`,
+`--text`, `--muted`, `--mint`, `--coral`, and `--amber`) and work with the
+existing dark/light theme switch.
+
 ## Notes / next steps
 
-- Swap the dummy `DEPOSIT_ADDRESS` in `app/wallet/page.js` for a real address
-  you control on Sepolia if you want to demo an actual on-chain deposit flow.
 - The bot "P&L" numbers are cosmetic (derived from live 24h % change) — hook
   up real order logic only once you're ready to test against a real exchange
   testnet API or a smart contract.
-- Auth is not real — `/login` just navigates to `/dashboard` on submit. Wire
-  up Supabase (like your other projects) or NextAuth if you want real
-  sessions.
